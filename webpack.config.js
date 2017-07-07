@@ -12,20 +12,25 @@ module.exports = {
         filename: 'bundle-[hash].js',
 	path: path.resolve(__dirname, 'dist')
    },
+  devServer: {
+         contentBase: path.join(__dirname, "dist"),
+	     compress: true,
+	         port: 9000
+		   },
   plugins: [
         new uglifyJsPlugin({
-	compress: {
-	warnings: false
+	  compress: {
+	  warnings: false
 		       }
         }),
-	    new HtmlwebpackPlugin({
-	          title: 'Webpack-demos',
-		        filename: 'index.html'
-			    }),
-			        new OpenBrowserPlugin({
-				      url: 'http://localhost:8080'
-				          })
-     ],
+	new HtmlwebpackPlugin({
+	  title: 'Webpack-demos',
+          filename: 'index.html'
+        }),
+        new OpenBrowserPlugin({
+	  url: 'http://localhost:9000'
+	})
+  ],
     module: {
         loaders:[
 	  { 
@@ -37,6 +42,7 @@ module.exports = {
 	  
 	   ]
 	  },
+
 	  { 
 	     test: /\.(png|jpg|jpeg)$/, 
 	     loaders: [
@@ -44,14 +50,15 @@ module.exports = {
 			 'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
 	     ]
 	  },
-        {
+          
+	  {
 	      test: /\.jsx?$/,
 	      exclude: /(node_modules|bower_components)/,
 	      loader: 'babel-loader', // 'babel-loader' is also a legal name to reference
 	      query: {
 	      presets: ['es2015']
 	                 }
-	}
+	  }
       ]
    }   
 }
